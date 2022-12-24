@@ -99,87 +99,97 @@ Maxent_train_pred_func = function(occ_data=Cutlassfish_occ,
 }
 
 # Train Maxent model and predict ------------------------------------------------
+# NOTE! This will take long time to compute and create a lot of files
+
+Train_mod = F
 
 ## both ----------------------------------------------------------------------
 
-Cutlassfish_both_filename=list.files("./compiled_data/occ_data_in_ground/grid_both",full.names=T)
-bg_env_both_filename=list.files("./compiled_data/bg_file/grid_both",
-                                pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
-
-for (m in 9:11){
+if(Train_mod==T){
+  Cutlassfish_both_filename=list.files("./compiled_data/occ_data_in_ground/grid_both",full.names=T)
+  bg_env_both_filename=list.files("./compiled_data/bg_file/grid_both",
+                                  pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
   
-  save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_both/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
-  # create folder
-  ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
-  
-  # Maxent Model
-  Maxent_output = 
-    Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_both_filename[m],row.names = 1,stringsAsFactors = F),
-                           Env_mth_data=Env[[m-8]],
-                           bg_env_data=read.csv(bg_env_both_filename[m-8],row.names = 1,stringsAsFactors = F),
-                           save_dir=save_dir)
-  
-  Maxent_mod = Maxent_output[[2]]
-  write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_both/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
-  save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_both/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
-  write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_both/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  for (m in 9:11){
+    
+    save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_both/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
+    # create folder
+    ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
+    
+    # Maxent Model
+    Maxent_output = 
+      Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_both_filename[m],row.names = 1,stringsAsFactors = F),
+                             Env_mth_data=Env[[m-8]],
+                             bg_env_data=read.csv(bg_env_both_filename[m-8],row.names = 1,stringsAsFactors = F),
+                             save_dir=save_dir)
+    
+    Maxent_mod = Maxent_output[[2]]
+    write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_both/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
+    save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_both/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
+    write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_both/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  }
 }
+
 
 
 ## bycatch ----------------------------------------------------------------------
 ### - origin
-Cutlassfish_bycatch_filename=list.files("./compiled_data/occ_data_in_ground/grid_bycatch",full.names=T)
-bg_env_bycatch_filename=list.files("./compiled_data/bg_file/grid_bycatch",
-                                   pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
 
-
-for (m in 9:11){
+if(Train_mod==T){
+  Cutlassfish_bycatch_filename=list.files("./compiled_data/occ_data_in_ground/grid_bycatch",full.names=T)
+  bg_env_bycatch_filename=list.files("./compiled_data/bg_file/grid_bycatch",
+                                     pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
   
-  save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_bycatch/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
-  # create folder
-  ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
   
-  # Maxent Model
-  Maxent_output = 
-    Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_bycatch_filename[m],row.names = 1,stringsAsFactors = F),
-                           Env_mth_data=Env[[m-8]],
-                           bg_env_data=read.csv(bg_env_bycatch_filename[m-8],row.names = 1,stringsAsFactors = F),
-                           save_dir=save_dir)
-  
-  Maxent_mod = Maxent_output[[2]]
-  write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_bycatch/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
-  save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_bycatch/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
-  write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_bycatch/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  for (m in 9:11){
+    
+    save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_bycatch/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
+    # create folder
+    ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
+    
+    # Maxent Model
+    Maxent_output = 
+      Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_bycatch_filename[m],row.names = 1,stringsAsFactors = F),
+                             Env_mth_data=Env[[m-8]],
+                             bg_env_data=read.csv(bg_env_bycatch_filename[m-8],row.names = 1,stringsAsFactors = F),
+                             save_dir=save_dir)
+    
+    Maxent_mod = Maxent_output[[2]]
+    write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_bycatch/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
+    save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_bycatch/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
+    write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_bycatch/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  }
 }
-
 
 
 ## target ----------------------------------------------------------------------
 ### - origin
-Cutlassfish_target_filename=list.files("./compiled_data/occ_data_in_ground/grid_target",full.names=T)
-bg_env_target_filename=list.files("./compiled_data/bg_file/grid_target",
-                                   pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
 
-
-for (m in 9:11){
+if(Train_mod==T){
+  Cutlassfish_target_filename=list.files("./compiled_data/occ_data_in_ground/grid_target",full.names=T)
+  bg_env_target_filename=list.files("./compiled_data/bg_file/grid_target",
+                                    pattern =glob2rx("bg10e4Bgbias_*.csv") ,full.names=T)
   
-  save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_target/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
-  # create folder
-  ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
   
-  # Maxent Model
-  Maxent_output = 
-    Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_target_filename[m-3],row.names = 1,stringsAsFactors = F),
-                           Env_mth_data=Env[[m-8]],
-                           bg_env_data=read.csv(bg_env_target_filename[m-8],row.names = 1,stringsAsFactors = F),
-                           save_dir=save_dir)
-  
-  Maxent_mod = Maxent_output[[2]]
-  write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_target/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
-  save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_target/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
-  write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_target/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  for (m in 9:11){
+    
+    save_dir = paste0("./output/Maxent_5CV/Maxent_result_detail/grid_target/",formatC(m,width = 2,flag = 0),"_bg10e4Bgbias")
+    # create folder
+    ifelse(!dir.exists(save_dir), dir.create(file.path(save_dir)),FALSE)
+    
+    # Maxent Model
+    Maxent_output = 
+      Maxent_train_pred_func(occ_data=read.csv(Cutlassfish_target_filename[m-3],row.names = 1,stringsAsFactors = F),
+                             Env_mth_data=Env[[m-8]],
+                             bg_env_data=read.csv(bg_env_target_filename[m-8],row.names = 1,stringsAsFactors = F),
+                             save_dir=save_dir)
+    
+    Maxent_mod = Maxent_output[[2]]
+    write.csv(Maxent_output[[1]],paste0("./output/Maxent_5CV/Maxent_result_summary/grid_target/Maxent_Summary_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".csv"))
+    save(Maxent_mod,file=paste0("./output/Maxent_5CV/Maxent_result_summary/grid_target/Maxent_mod_bg10e4Bgbias_5CV_",formatC(m,width = 2,flag = 0),".RData"))
+    write.csv(Maxent_output[[3]],paste0("./output/Maxent_5CV/Maxent_pred/grid_target/pred_bg10e4Bgbias_",formatC(m,width = 2,flag = 0),".csv"))
+  }
 }
-
 
 
 # prediction for whole map -------------------------------------------------------
