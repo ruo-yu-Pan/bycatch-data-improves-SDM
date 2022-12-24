@@ -20,7 +20,7 @@ I first categorized the code into two groups, which is stored as two folders:
 Other Scripts with **"Function"** and **"Plot"** at the beginning are the function and needed in the scripts in the folder "integrate_bycatch" and are for ploting
 
 
-#### Step by Step Analysis
+# Step by Step Analysis
 1. Download data from the Dryad or from the authors, and save it with the name "Fishtactics_SDM_data_check". 
 2. Download code and (1) save at the same path as "Fishtactics_SDM_data_check" and (2) named it "Fishtactics_SDM_code_check"
 3. Remember to change the contents saved in the variables **"wd"** and **"Root_dir"** in the scripts to your saving path. 
