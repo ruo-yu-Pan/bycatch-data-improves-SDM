@@ -17,7 +17,7 @@ I first categorized the code into two groups, which is stored as two folders:
 - environment: this contains the code for compiling the environment data
 - Integrate_bycatch: this folder contains the code for reproducing the results in the study.
 
-Other Scripts with **"Function"** and **"Plot"** at the beginning are the function and needed in the scripts in the folder "integrate_bycatch" and are for ploting
+Other Scripts with **"Function"** and **"Plot"** at the beginning are the function needed in the scripts in the folder "integrate_bycatch" and are for ploting
 
 
 # Step by Step Analysis
@@ -27,4 +27,4 @@ Other Scripts with **"Function"** and **"Plot"** at the beginning are the functi
 4. Run the scripts in the folder, integrate_bycatch, one by one in order (From 1st to 13th scripts).
 
 # Contact
-If you find any bugs or have any questions about the implementation, pelease contact us via elthina02017@gmail.com
+If you find any bugs or have any questions about the implementation, please contact us via elthina02017@gmail.com
